@@ -1,0 +1,68 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title=info.subject
+    style.
+      body{
+        background-color: #f6f6f6;
+        padding: 0 10px;
+        margin: 0;
+      }
+      
+      .mainTable{
+        word-wrap: break-word;
+        max-width: 580px;
+        margin: auto;
+        border-collapse: collapse;
+      }
+      .mainTable .contentTable{
+        word-wrap: break-word;
+        background-color: #fff;
+        width: 100%;
+        border-radius: 5px;
+        margin: 20px auto;
+        margin-bottom: 0;
+      }
+      
+      table{
+        /* border: 1px solid red; */
+        width: 100%;
+        border-spacing: 20px;
+      }
+      p{
+        font-family: sans-serif;
+        font-size: 14px; 
+        font-weight: normal;
+        word-wrap: break-word;
+      }
+      .link{
+        display: inline-block;
+        text-decoration: none;
+        color: #FFF;
+        background-color: #2a6355;
+        font-family: sans-serif;
+        padding: 10px;
+        border: 1px solid #2a6355;
+        border-radius: 3px;
+      }
+  body
+    table.mainTable
+      tr
+        td
+          //- table for the main cotent
+          table.contentTable
+            tr
+              td
+                p Hi #{info.name},
+                p check out the new #{info.message} post though the link below
+                a.link(href=`${info.frontEnd}/${info.url}`) visit
+                p If you haven&apos;t forgot your password please ignore this Email!!!
+          table.footerTable
+            tr
+              td
+                p.bottom Company Inc, mekelle MIT ,Aynalem
+                p.bottom Don&apos;t like these emails?  
+                  a.Unsubscribe(href=`${info.frontEnd}/newsletter/Unsubscribe/${info.subscriberId}`)  Unsubscribe.
