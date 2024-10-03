@@ -87,7 +87,8 @@ exports.common_controller =  (model)=>{
           const operationResults = [];
 
           for (const [index, operation] of transactionOperations.entries()) {
-              const { model, operationType, find_ref, update, data, options = {} } = operation;
+              const { model, find_ref, update, data, options = {} } = operation;
+              const operationType =  operation.operation
 
               const Model = models_ref[model];
               if (!model) next(new app_error_feedback(500, `Model ${model} not found`))
@@ -213,7 +214,7 @@ function resolvePlaceholder(value, req, operationResults) {
 // things to be passed by transaction keys
   // "model" : "test"
 
-  // "operationType" : "create" , "update" , "delete" , "read"
+  // "operation" : "create" , "update" , "delete" , "read"
 
   // "find_ref" : 
     //  { "_id": "{previousResult[0]._id}" }

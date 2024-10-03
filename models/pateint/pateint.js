@@ -14,7 +14,7 @@ const schema  = {
     type: String,
     required: true,
   },
-  Age: {
+  age: {
     type: Number,
     required: true,
   },
@@ -54,6 +54,10 @@ const schema  = {
     unique: true
   },
   // medical adminstration information
+  MRN:{
+    type: Number, // on register add one to the geater MRN ever recorder 
+    required: true,
+  },
   type: {
     type: String,
     enum: {

@@ -42,9 +42,6 @@ const schema = {
   passwordChangedAt: {type:Date},
   passwordResetToken: {type:String},
   passwordResetExpires: {type:Date},
-  logged_in:{
-    type: String,
-  },
   last_logged_in:{
     type: Date,
   },

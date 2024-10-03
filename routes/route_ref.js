@@ -114,13 +114,37 @@ exports.routes_ref = [
           common: false
         },
       },
+      // if we want to check password before updating PhoneNumber
+      { 
+        url: '/update_phoneNumber', 
+        method: 'post',
+        filter_reqBody_keys:['currentPassword','newPhoneNumber'],
+        req_body_validation :false,
+        auth: true,
+        controller:{
+          method: 'update_phoneNumber',
+          common: false
+        },
+      },
+      // if we want to check password before updating email
+      { 
+        url: '/update_email', 
+        method: 'post',
+        filter_reqBody_keys:['currentPassword','email'],
+        req_body_validation :false,
+        auth: true,
+        controller:{
+          method: 'update_email',
+          common: false
+        },
+      },
       { 
         url: '/update_me', 
         method: 'post',
         req_body_validation :false,
         auth: true,
-        upload: { uploadType: 'single', fileType: 'image', fieldName: 'avatar'},
         image_upload : true,
+        upload: { uploadType: 'single', fileType: 'image', fieldName: 'avatar'},
         save_file_to: 'users',
         controller:{
           method: 'update_me',
@@ -167,7 +191,7 @@ exports.routes_ref = [
     controller_file: 'pateint', 
     api: [
       { 
-        url: '/', 
+        url: '/search', 
         method: 'get',
         req_body_validation: false,
         controller:{

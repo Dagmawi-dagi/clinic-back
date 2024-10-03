@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const schema = {
+  employee_archive: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'employee_archive',
+    required: true
+  },
   shift : {
     type: String,
     enum: {

@@ -18,26 +18,19 @@ exports.sign_up = catchAsync(async (req,res,next) =>{
 });
 
 exports.sign_in = catchAsync(async(req,res,next)=>{  
-  console.log(req.body);
-  
-  
   if(!req.body.phoneNumber || !req.body.userPassword) return next(new app_error_feedback(400,'please provide phoneNumber and password') )
   const user = await userModel.model.findOne({phoneNumber: req.body.phoneNumber }).select('+userPassword')
   // console.log(user);
-  // check if the user and the password is correct make sure you select the password field
-  if (!user || !await bcrypt.compare(req.body.userPassword,user.userPassword) ) return next(new app_error_feedback(400,'please provide correct phoneNumber and password'))
-
+  if (!user || !await bcrypt.compare(req.body.userPassword,user.userPassword)) return next(new app_error_feedback(400,'please provide correct phoneNumber and password'))
   // create token
   const token = jsonWebToken.sign({id:user._id},process.env.JWT_SECRET, { expiresIn: process.env.JWT_expiresIn } )
-
   // to exclude the userPassword field from the doc we send to client but DO NOT CAll .save() right after that 
   user.userPassword = undefined
   res.status(200).json({
     status: 'success',
     token,
-    user 
+    data: user 
   })
-
 });
 
 exports.get_me = catchAsync(async(req, res, next) => {
@@ -86,23 +79,87 @@ exports.update_password = catchAsync(async(req,res,next)=>{
   
 });
 
+// update phoneNumber but ask for the currenr password to make sure the user is the owner of the account
+exports.update_phoneNumber = catchAsync(async(req,res,next)=>{
+
+  if(!req.body.currentPassword || !req.body.newPhoneNumber) return next(new app_error_feedback(400,'please provide currentPassword and newPhoneNumber') )
+
+  const user = await userModel.model.findById(req.user._id).select('+userPassword')
+  const correct = await bcrypt.compare(req.body.currentPassword,user.userPassword)
+  
+  // if the currentpassword and inputed are the same
+  if(!correct) return next(new app_error_feedback(400, 'The currentPassword you provided is incorrect'))
+
+  user.phoneNumber = req.body.newPhoneNumber
+  const updatedUser =  await user.save()
+
+  //give the user new JWT
+  const token = jsonWebToken.sign({id:updatedUser._id},process.env.JWT_SECRET, { expiresIn: process.env.JWT_expiresIn } )   
+
+  // to exclude the userPassword field from the doc we send to client
+  updatedUser.userPassword = undefined
+
+  res.status(200).json({
+    status: 'successs',
+    token,
+    data: updatedUser
+  })
+  
+});
+
+// update email but ask for the current password to make sure the user is the owner of the account
+exports.update_email = catchAsync(async(req,res,next)=>{
+
+  if(!req.body.currentPassword || !req.body.email) return next(new app_error_feedback(400,'please provide currentPassword and newEmail') )
+
+  const user = await userModel.model.findById(req.user._id).select('+userPassword')
+  const correct = await bcrypt.compare(req.body.currentPassword,user.userPassword)
+  
+  // if the currentpassword and inputed are the same
+  if(!correct) return next(new app_error_feedback(400, 'The currentPassword you provided is incorrect'))
+
+    // update the email no need to hash it here we have the Document "pre save" middleware for that
+  // and also set the passwordChangedAt
+  user.email = req.body.email,
+  user.passwordChangedAt = Date.now()
+  const updatedUser =  await user.save()
+
+  //give the user new JWT
+  const token = jsonWebToken.sign({id:updatedUser._id},process.env.JWT_SECRET, { expiresIn: process.env.JWT_expiresIn } )   
+
+  // to exclude the userPassword field from the doc we send to client
+  updatedUser.userPassword = undefined
+
+  res.status(200).json({
+    status: 'successs',
+    token,
+    data: updatedUser
+  })
+  
+});
+
 exports.update_me = catchAsync(async(req,res,next)=>{
   if(JSON.stringify(req.body).includes('password')) return next(new app_error_feedback(400, 'this route is not for password updates'))
-
   // here filter your update obj
   const updateObject = {}
   if(req.body.userName) updateObject.userName = req.body.userName
   if(req.body.email) updateObject.email = req.body.email
   if(req.body.avatar) updateObject.avatar = req.body.avatar
+
+  console.log(updateObject);
   
   // find the user and update it by using findByIdAndUpdate only the updated ones will be validated
   const user =  await userModel.model.findByIdAndUpdate(req.user.id,updateObject,{new: true,runValidators:true})
 
+  //give the user new JWT
+  const token = jsonWebToken.sign({id:user._id},process.env.JWT_SECRET, { expiresIn: process.env.JWT_expiresIn } )   
+
   res.status(200).json({
     status: 'success',
+    token,
     data:user
   })
-  
+
 });
 
 exports.forgot_password = catchAsync(async(req,res,next)=>{

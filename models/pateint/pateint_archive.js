@@ -6,10 +6,7 @@ const schema = {
     ref: 'pateint',
     required: true
   },
-  MRN:{
-    type: Number, // on register add one to the geater MRN ever recorder 
-    required: true,
-  }
+ 
 }
 
 const pateint_archive_Schema = new mongoose.Schema(schema,{

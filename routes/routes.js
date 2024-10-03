@@ -24,20 +24,26 @@ for (let i = 0; i < routes_ref.length; i++) {
 
     router[method](
       `${baseUrl}${url}`,
+      //auth middleware
       auth_needed ? auth : (req,res,next)=> next(),
+      //restriction middleware
       restrict_to_needed ? restrict_to(api[i].restrict_to) :  (req,res,next)=> next(),
+      // file upload middleware
       api[i].upload ? uploadFile(api[i].upload) : (req,res,next)=> next(),
+      // image upload proccesser middleware
       api[i].image_upload ? proccessImgUpload : (req,res,next)=> next(),
+      // file save middleware
       api[i].save_file_to ? saveFile({saveFolder: api[i].save_file_to}) : (req,res,next)=> next(),
+      // middle ware to add anything to the req passed from the route_ref
       (req,res,next)=>{ 
-        // here add middle ware to add anything  to the req passed from the route_ref
         req.route_ref = api[i]
-        req.simple_transaction = controller.simple_transaction 
-        api[i].upload ? customize_process_req(req).add_filename_to_reqBody() : ''
-        api[i].filter_reqBody_keys ? customize_process_req(req).filter_reqBody(next) : ''
-        customize_process_req(req).validate_reqBody(next)   
+        req.simple_transaction = controller.simple_transaction // if we want to run simple transaction in the commoncontroller
+        api[i].upload ? customize_process_req(req).add_filename_to_reqBody() : '' // so when we save the file name to DB we can get it from req.body.fieldname
+        api[i].filter_reqBody_keys ? customize_process_req(req).filter_reqBody(next) : '' // filter the req.body before passing it to the controller
+        customize_process_req(req).validate_reqBody(next)  // validate the req.body before passing it to the controller
         next() 
       },
+
       // final route controller
       controller.common ? ( model ?  common_controller(models_ref[model].model)[controller.method] :  common_controller (undefined).run_simple_transaction )
       : controllers_ref[controller_file][controller.method],
