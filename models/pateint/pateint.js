@@ -1,5 +1,6 @@
 const mongoose =  require('mongoose');
 
+// NOTE for the Not required fields put default value as null
 const schema  = {
   // personal information
   first_name :{
@@ -20,6 +21,10 @@ const schema  = {
   },
   gender:{
     type: String,
+    enum: {
+      values: ['male', 'female'],
+      message: '{VALUE} is not supported'
+    },
     required: true,
   },
   marital_status:{
@@ -35,18 +40,23 @@ const schema  = {
   // address information
   country :{
     type: String,
+    default: null
   },
   region :{
     type: String,
+    default: null
   },
   wereda :{
     type: String,
+    default: null
   },
   zone :{
     type: String,
+    default: null
   },
   kebele:{
     type: String,
+    default: null
   },
   phone_number:{
     type: String,
@@ -56,22 +66,22 @@ const schema  = {
   // medical adminstration information
   MRN:{
     type: Number, // on register add one to the geater MRN ever recorder 
-    required: true,
+    unique: true,
   },
   type: {
     type: String,
     enum: {
       values: ['in_pateint','out_pateint', 'service'],
       message: '{VALUE} is not supported'
-    }
+    },
+    required: true,
   },
   insurance_company :{
     // if the pateint is insured
     // use parent referencing to refer to which company you belong to
-
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'insurance',
-    required: false,
+    default: null
   },
   invoice_destination: {
     type: String,

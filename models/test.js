@@ -13,6 +13,7 @@ const joi  = require('joi');
 //   message: props => 'asdasd'
 // }
 
+// NOTE for the Not required fields put default value as null
 const schema = {
   name : {
     type: String,

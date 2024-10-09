@@ -25,11 +25,13 @@ const schema = {
     type: Number,
     required: true
   },
-  service: {
+  service: { // if the invoice is for service
     type: mongoose.Schema.Types.ObjectId,
-    // or refer form prscription if their is pharmacy ... refer mongoose documentation
     ref: 'service',
-    required: true
+  },
+  custom_invoice:{ // if the invoice is for custom_invoices
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'custom_invoice',
   },
   updated: {type: Boolean }, // can be updated by the one who created it
   createdBy:{

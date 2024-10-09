@@ -1,13 +1,13 @@
 // these below are server api routes
 
 // NOTE 
- // the option for d|t ways of uplod are..
-    // {
-    //  uploadType: 'single' || 'array' || 'array_'
-    //  fileType: 'text/html' || 'image' || 'application/pdf'....
-    //  fieldName: 'coverImg' || { name: 'avatar', maxCount: 1 } ---? if uploadType === 'array_'
-    //  maxCount: 10 // only if uploadType === 'array'
-    // },
+// the options for d|t ways of upload are..
+  // {
+  //  uploadType: 'single' || 'array' || 'array_'
+  //  fileType: 'text/html' || 'image' || 'application/pdf'....
+  //  fieldName: 'coverImg' || { name: 'avatar', maxCount: 1 } ---? if uploadType === 'array_'
+  //  maxCount: 10 // only if uploadType === 'array'
+  // },
 
   // use this example below to define the routes
     // {
@@ -17,30 +17,25 @@
     //   api: [
     //     { 
     //       url: '/:id', 
-    //       method: 'get', 
+    //       req_method: 'get', 
     //       auth: false,
     //       restrict_to: ['aaa'],
     //       upload: { uploadType: 'single', fileType: 'image', fieldName: 'coverImg'},
     //       image_upload : true,
     //       save_file_to: 'event',
-    //       filter_reqBody_keys:['filed',"field"], // must be for every put and patch req
+    //       filter_reqBody_with:['filed',"field"], // must be for every put and patch req
     //       req_body_validation:false
     //       controller:{
-    //          method: 'create',
+    //          crud_method: 'create',
     //          model: 'emergency_contact',
     //          common: true,
-    //          simple_transaction:{refer what to pass here on the common controller factory function commented below }
     //        },
     //     },
     //   ],
     // }
 
-
-
-    
-// after setting up sheama correctly  do your front End 
+// after setting up sheama correctly do your front End 
 // and add what the api routes you need for your Front End logics here 
-
 // use the routes_ref to create postman Api routes testing  // make this automatic DONOT spent time creating  postman Api routes for every route_refs that is just stupid
 
 exports.routes_ref = [
@@ -51,11 +46,17 @@ exports.routes_ref = [
     api: [
       { 
         url: '/', 
-        method: 'put',
-        filter_reqBody_keys:['name'],
+        req_method: 'put',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'create',
           model: 'test',
+          crud_method: 'create',
           common: true
         },
       },
@@ -70,115 +71,170 @@ exports.routes_ref = [
     api: [
       { 
         url: '/sign_up', 
-        method: 'post',
+        req_method: 'post',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'sign_up',
+          crud_method: 'sign_up',
           common: false
         },
       },
       { 
         url: '/sign_in', 
-        method: 'post',
-        filter_reqBody_keys:['phoneNumber','userPassword'],
-        req_body_validation :false,
+        req_method: 'post',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['phoneNumber','userPassword'],
         controller:{
-          method: 'sign_in',
+          crud_method: 'sign_in',
           common: false
         },
       },
       { 
         url: '/get_me', 
-        method: 'get',
+        req_method: 'get',
         auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'get_me',
+          crud_method: 'get_me',
           common: false
         },
       },
       { 
         url: '/get_user/:id', 
-        method: 'get',
+        req_method: 'get',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'get_user',
+          crud_method: 'get_user',
           common: false
         },
       },
       { 
         url: '/update_password', 
-        method: 'post',
-        filter_reqBody_keys:['currentPassword','newPassword'],
-        req_body_validation :false,
+        req_method: 'post',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['currentPassword','newPassword'],
         auth: true,
         controller:{
-          method: 'update_password',
+          crud_method: 'update_password',
           common: false
         },
       },
       // if we want to check password before updating PhoneNumber
       { 
         url: '/update_phoneNumber', 
-        method: 'post',
-        filter_reqBody_keys:['currentPassword','newPhoneNumber'],
-        req_body_validation :false,
+        req_method: 'post',
         auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['currentPassword','newPhoneNumber'],
         controller:{
-          method: 'update_phoneNumber',
+          crud_method: 'update_phoneNumber',
           common: false
         },
       },
       // if we want to check password before updating email
       { 
         url: '/update_email', 
-        method: 'post',
-        filter_reqBody_keys:['currentPassword','email'],
-        req_body_validation :false,
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['currentPassword','email'],
         auth: true,
         controller:{
-          method: 'update_email',
+          crud_method: 'update_email',
           common: false
         },
       },
       { 
         url: '/update_me', 
-        method: 'post',
-        req_body_validation :false,
+        req_method: 'post',
         auth: true,
-        image_upload : true,
+        restrict_to:[],
         upload: { uploadType: 'single', fileType: 'image', fieldName: 'avatar'},
+        image_upload:true,
         save_file_to: 'users',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'update_me',
+          crud_method: 'update_me',
           common: false
         },
       },
       { 
         url: '/forgot_password', 
-        method: 'post',
-        filter_reqBody_keys:['email'],
-        req_body_validation :false,
+        req_method: 'post',
         auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['email'],
         controller:{
-          method: 'forgot_password',
+          crud_method: 'forgot_password',
           common: false
         },
       },
       { 
         url: '/reset_password/:resetToken', 
-        method: 'post',
-        filter_reqBody_keys:['newPassword'],
-        req_body_validation :false,
+        req_method: 'post',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['newPassword'],
         controller:{
-          method: 'reset_password',
+          crud_method: 'reset_password',
           common: false
         },
       },
       { 
         url: '/delete_me', 
-        method: 'delete',
-        req_body_validation :false,
+        req_method: 'delete',
         auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'delete_me',
+          crud_method: 'delete_me',
           common: false
         },
       },
@@ -192,65 +248,79 @@ exports.routes_ref = [
     api: [
       { 
         url: '/search', 
-        method: 'get',
-        req_body_validation: false,
+        req_method: 'get',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
           model: 'pateint',
-          method: 'getList',
+          crud_method: 'getList',
           common: true,
         },
       },
       { 
         url: '/:id', 
-        method: 'get',
-        req_body_validation: false,
+        req_method: 'get',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'getOne',
+          crud_method: 'getOne',
           model: 'pateint',
           common: true
         },
       },
       { 
         url: '/register_pateint', 
-        method: 'post',
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'run_simple_transaction',
-          common: true,
-          simple_transaction:{
-            operations: [
-              {
-                "model": "pateint",
-                "operation": "create",
-                "data": 'req.body',
-              },
-              {
-                "model": "pateint_archive",
-                "operation": "create",
-                "data": {
-                  "pateint": "{previousResult[0]._id}"
-                }
-              },
-            ] 
-          }
+          crud_method: 'register_pateint',
+          common: false,
         },
       },
       { 
         url: '/:id/update_insurer', 
-        method: 'patch',
-        filter_reqBody_keys:['insurance_company'],
-        req_body_validation: false,
+        req_method: 'patch',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['insurance_company'],
         controller:{
-          method: 'update',
+          crud_method: 'update',
           model: 'pateint',
           common: true
         },
       },
       { 
         url: '/:id', 
-        method: 'put',
-        req_body_validation: false,
+        req_method: 'put',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'update',
+          crud_method: 'update',
           model: 'pateint',
           common: true
         },
@@ -265,10 +335,16 @@ exports.routes_ref = [
     api: [
       { 
         url: '/:id', 
-        method: 'get',
+        req_method: 'get',
         auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'getOne',
+          crud_method: 'getOne',
           model: 'pateint_archive',
           common: true
         },
@@ -283,19 +359,32 @@ exports.routes_ref = [
     api: [
       { 
         url: '/create', 
-        method: 'post',
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'create',
+          crud_method: 'create',
           model:'warning',
           common: true,
         },
       },
       { 
         url: '/:id', 
-        method: 'patch',
-        filter_reqBody_keys: ['pateint_archive','allergy','behavior','chronic_diseases'],
+        req_method: 'patch',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with: ['pateint_archive','allergy','behavior','chronic_diseases'],
         controller:{
-          method: 'update',
+          crud_method: 'update',
           model:'warning',
           common: true,
         },
@@ -310,19 +399,26 @@ exports.routes_ref = [
     api: [
       { 
         url: '/create', 
-        method: 'post',
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with: [],
         controller:{
-          method: 'create',
+          crud_method: 'create',
           model:'appointment',
           common: true,
         },
       },
       { 
         url: '/:id', 
-        method: 'patch',
-        filter_reqBody_keys: ['pateint_archive','date','comment','appointed_by'],
+        req_method: 'patch',
+        filter_reqBody_with: ['pateint_archive','date','comment','appointed_by'],
         controller:{
-          method: 'update',
+          crud_method: 'update',
           model:'appointment',
           common: true,
         },
@@ -337,22 +433,32 @@ exports.routes_ref = [
     api: [
       { 
         url: '/create', 
-        method: 'post',
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
         upload: { uploadType: 'array', fileType: 'image', fieldName: 'scanned_docs', maxCount:20},
         image_upload : true,
         save_file_to: 'scanned_docs',
+        req_body_validation:false,
+        filter_reqBody_with: [],
         controller:{
-          method: 'create',
+          crud_method: 'create',
           model:'external_medical_doc',
           common: true,
         },  
       },
       { 
         url: '/:id', 
-        method: 'patch',
-        filter_reqBody_keys:['pateint_archive','scanned_docs','comment'],
+        req_method: 'patch',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['pateint_archive','scanned_docs','comment'],
         controller:{
-          method: 'update',
+          crud_method: 'update',
           model:'external_medical_doc',
           common: true,
         },
@@ -367,20 +473,73 @@ exports.routes_ref = [
     api: [
       { 
         url: '/create', 
-        method: 'post',
+        req_method: 'post',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
         controller:{
-          method: 'create',
+          crud_method: 'create',
           model: 'emergency_contact',
           common: true
         },
       },
       { 
         url: '/:id', 
-        method: 'patch',
-        filter_reqBody_keys:['name','phone_number','pateint_archive'],
+        req_method: 'patch',
+        auth: false,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:['name','phone_number','pateint_archive'],
         controller:{
-          method: 'create',
+          crud_method: 'create',
           model: 'emergency_contact',
+          common: true
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'custom_invoice',
+    base_url : '/custom_invoice',
+    controller_file: 'custom_invoice', 
+    api: [
+      { 
+        url: '/', 
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:true,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'custom_invoice',
+          crud_method: 'create',
+          common: true
+        },
+      },
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'custom_invoice',
+          crud_method: 'getList',
           common: true
         },
       },

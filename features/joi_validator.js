@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose')
 
-exports.generateJoiSchema  = (mongooseSchema) => {
+exports.generateJoiSchema  = (mongooseSchema,schemaName) => {
   const joiSchema = {};
   
 
@@ -16,7 +16,7 @@ exports.generateJoiSchema  = (mongooseSchema) => {
       if (field.enum) {
         if( field.enum.message ) schema = schema.valid(...field.enum.values) // if  enum:{  values: ['requested', 'approved','rejected'],message: '{VALUE} is not supported' },
         else schema = schema.valid(...field.enum) // if enum: ['John', 'Jane', 'Doe']
-      };
+      }
       if (field.match) schema = schema.pattern(field.match);
       if (field.minLength !== undefined) schema = schema.min(field.minLength);
       if (field.maxLength !== undefined) schema = schema.max(field.maxLength);
@@ -48,8 +48,6 @@ exports.generateJoiSchema  = (mongooseSchema) => {
     // any
     else schema = Joi.any();
     
-  
-
     // Handle custom validators
     if (field.validate) {
         const validator = field.validate.validator;
@@ -67,11 +65,29 @@ exports.generateJoiSchema  = (mongooseSchema) => {
     // required | optional
     if (field.required) schema = schema.required(); 
     else schema = schema.optional();
-
+    // Adding schemaName to the error message for all fields
+    schema = schema.messages({
+      'string.base': `${schemaName}'s ${key} should be a type of 'text'`,
+      'string.empty': `${schemaName}'s ${key} cannot be empty`,
+      'string.pattern.base': `${schemaName}'s ${key} does not match the required pattern`,
+      'string.min': `${schemaName}'s ${key} should have a minimum length of {#limit}`,
+      'string.max': `${schemaName}'s ${key} should have a maximum length of {#limit}`,
+      'number.base': `${schemaName}'s ${key} should be a type of 'number'`,
+      'number.min': `${schemaName}'s ${key} should have a minimum value of {#limit}`,
+      'number.max': `${schemaName}'s ${key} should have a maximum value of {#limit}`,
+      'boolean.base': `${schemaName}'s ${key} should be a type of 'boolean'`,
+      'date.base': `${schemaName}'s ${key} should be a valid date`,
+      'array.base': `${schemaName}'s ${key} should be an array`,
+      'any.required': `${schemaName}'s ${key} is a required field`,
+      'any.only': `${schemaName}'s ${key} must be one of the allowed values: {#valids}`,
+      'any.custom': `${schemaName}'s ${key} failed custom validation`,
+    });
     joiSchema[key] = schema;
   }
 
   // return joiSchema
+    // include the schemaName inside the error message
+
   return Joi.object(joiSchema);
 }
 
