@@ -249,7 +249,7 @@ exports.routes_ref = [
       { 
         url: '/search', 
         req_method: 'get',
-        auth: false,
+        auth: true,
         restrict_to:[],
         upload: {},
         image_upload:false,

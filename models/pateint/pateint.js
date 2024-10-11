@@ -1,6 +1,7 @@
 const mongoose =  require('mongoose');
 
 // NOTE for the Not required fields put default value as null
+// NOTE on every create and update operations include the createdBy: user id ref(user reference id)
 const schema  = {
   // personal information
   first_name :{

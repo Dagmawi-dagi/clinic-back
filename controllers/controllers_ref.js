@@ -7,3 +7,4 @@ exports.controllers_ref = {
   pateint : require('./pateint/pateint'),
   emergency_contact : require('./pateint/emergency_contact'),
 }
+

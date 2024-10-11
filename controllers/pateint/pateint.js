@@ -51,4 +51,4 @@ exports.register_pateint = catchAsync(async(req,res,next)=>{
     } finally {
         session.endSession();        
     }
-})   
+})

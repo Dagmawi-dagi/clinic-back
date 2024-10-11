@@ -1,5 +1,5 @@
-const GetApi_QueryCustomization = require('../features/GetApi_QueryCustomzation');
 const app_error_feedback = require('../err_handling/app_error_feedback');
+const api_query_params = require('api-query-params');
 
 exports.common_controller =  (model)=>{
 
@@ -20,19 +20,34 @@ exports.common_controller =  (model)=>{
     if (!model) next(new app_error_feedback(500, `Model ${model} not found`))
 
     try {
-      const GetApi_Query =  new GetApi_QueryCustomization( model.find(), req.query)
-      .filter()
-      .sort()
-      .selectFields()
-      .pagination()
-    
-      const data = await GetApi_Query.query
+      // what must be passed for this controllers is according to the api_query_params way of doing things
+      // meaning the req.query must be long string (api_query_params way) not Key/value pairs
+      // OR use decodeURIComponent to decode like %20 cus thier will be if passing > < + ^ signs
+      // which we will pass > < for advanced queries other 
+      // refer the api_query_params lib for more info on what to pass https://www.npmjs.com/package/api-query-params?activeTab=readme#usage
+      const decodedURI = decodeURIComponent(req.url);
+      let queryStr = decodedURI.split('?')[1]
+      // handling {key: >value} || {key: <value} || {key: >=value} || {key: <=value} query params
+      queryStr = queryStr.replace(/=([><])/g, '$1');
+      // console.log(req.query);
+      // console.log(queryStr);
 
+      const { filter, skip, limit, sort, projection, population } = api_query_params(queryStr, {
+        limitKey: 'perPage',
+        skipKey: 'page',
+      });
+
+      const data = await model.find(filter)
+      .skip(skip)
+      .limit(limit)
+      .sort(sort)
+      .select(projection)
+      .populate(population)
       res.status(200).json({
         status: 'success',
         data
       })
-
+      
     } catch (err) {
       next(err) 
     }
