@@ -11,7 +11,7 @@ const app_error_feedback = require('./err_handling/app_error_feedback')
 require('./db conection/db');
 // for get,post cors
 // for preflight methods put,patch,delete
-// on production only ollow the requests from the FRONT-END URI 
+// on production only ollow the requests from the FRONT-END URI
 app.use(cors())
 app.options('*', cors())
 //3rd party middlewares

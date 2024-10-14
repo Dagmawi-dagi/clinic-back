@@ -7,7 +7,6 @@ const schema = {
     default: 'open',
   },
   canceled_reason: String, // if the invoice was canccelled we need to know why
-  
   payment_type:{
     type: String,
     enum: ['cash','bank','deposit'],
@@ -51,8 +50,13 @@ const schema = {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'pateint_archive'
   },
+  insurance: { // insurance reference if the invoice destination is "insurance"
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'insurance'
+  },
 }
 
 const invoice_Schema = new mongoose.Schema(schema,{timestamps:true})
+
 module.exports.model = mongoose.model('invoice',invoice_Schema)
 module.exports.schema = schema

@@ -6,5 +6,9 @@ exports.controllers_ref = {
   //pateint
   pateint : require('./pateint/pateint'),
   emergency_contact : require('./pateint/emergency_contact'),
+  //finance
+  credit: require('./finance/credit'),
+  custom_invoice: require('./finance/custom_invoice'),
+  insurance: require('./finance/insurance'),
 }
 

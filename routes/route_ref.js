@@ -62,7 +62,6 @@ exports.routes_ref = [
       },
     ],
   },
-
   // complete user routes for any project
   {
     route_for : 'user',
@@ -539,6 +538,134 @@ exports.routes_ref = [
         filter_reqBody_with:[],
         controller:{
           model: 'custom_invoice',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'invoice',
+    base_url : '/invoice',
+    controller_file: 'invoice', 
+    api: [
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'invoice',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'credit',
+    base_url : '/credit',
+    controller_file: 'credit',
+    api: [
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'credit',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'deposite',
+    base_url : '/deposite',
+    controller_file: 'deposite',
+    api: [
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'deposite',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'insurance',
+    base_url : '/insurance',
+    controller_file: 'insurance',
+    api: [
+      { 
+        url: '/', 
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'insurance',
+          crud_method: 'create',
+          common: true
+        },
+      },
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'insurance',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+      { 
+        url: '/invoices', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'insurance',
           crud_method: 'getList',
           common: true
         },

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const schema = {
+  // info
   company_name : {
     type: String,
     required: true,
@@ -9,13 +10,25 @@ const schema = {
     type: Number,
     required: true,
   },
-  percent: {
+  // discount form for all the services individually or as departments 
+  discount_form: {
     type: Object,
     required: true,
   },
-  address: {
-    type: Object,
+  // addresss
+  phone_number: {
+    type: String,
     required: true,
+  },
+  email: {
+    type: String,
+    lowercase: true,
+    trim: true,
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
   },
 }
 
@@ -24,11 +37,16 @@ const insurance_Schema = new mongoose.Schema(schema,{
   toJSON: { virtuals: true },
   toObject:{ virtuals: true }
 })
-
 // insurance_Schema (parent) will refer it's pateints
 insurance_Schema.virtual('pateints',{
   ref: 'pateint',
   foreignField: 'insurance_company',
+  localField: '_id'
+});
+// insurance_Schema (parent) will refer it's invoices
+insurance_Schema.virtual('invoices',{
+  ref: 'invoice',
+  foreignField: 'insurance',
   localField: '_id'
 });
 

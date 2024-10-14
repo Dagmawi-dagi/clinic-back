@@ -11,9 +11,14 @@ const schema = {
     ref: 'invoice',
     required: true
   },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required: true
+  },
 }
 
 const credit_Schema = new mongoose.Schema(schema,{timestamps:true})
 
-module.exports.creditModel = mongoose.model('credit',credit_Schema)
+module.exports.model = mongoose.model('credit',credit_Schema)
 module.exports.schema = schema

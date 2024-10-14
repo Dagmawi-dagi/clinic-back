@@ -11,7 +11,7 @@ exports.register_pateint = catchAsync(async(req,res,next)=>{
 
     // since this route is auth protected find the user from the token
     const user = req.user;
-    pateint.MRN = await models_ref.pateint.model.count() + 1
+    pateint.MRN = (await models_ref.pateint.model.find()).length + 1;
 
     const session = await mongoose.startSession();
     try {
@@ -29,7 +29,7 @@ exports.register_pateint = catchAsync(async(req,res,next)=>{
             await models_ref.emergency_contact.model.create([emergency_contact[i]], { session });
         }
 
-        // since the invoice is array create invoice for each emergency contact sent
+        // since the invoice is array create invoice for each invoice sent
         for (let i = 0; i < invoice.length; i++) {
             await models_ref.invoice.model.create([{
                 issued_at_price:invoice[i].payment_amount,
@@ -37,6 +37,7 @@ exports.register_pateint = catchAsync(async(req,res,next)=>{
                 createdBy:user._id,
                 destination: pateint_obj[0].invoice_destination,
                 pateint_archive: pateint_archive_obj[0]._id,
+                insurance: pateint_obj[0].invoice_destination === 'insurance' ? pateint_obj[0].insurance_company : null
             }], { session });
         }
 
