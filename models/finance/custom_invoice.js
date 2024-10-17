@@ -11,6 +11,11 @@ const schema = {
   },
   exp_date_indays:{ // in days 
     type: Number,
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
   }
 }
 

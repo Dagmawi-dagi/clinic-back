@@ -26,11 +26,6 @@ const schema = {
     type: Date,
     required: true 
   },
-  createdBy:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-    required: true,
-  },
   comment:{
     type: String,
   },
@@ -38,6 +33,11 @@ const schema = {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'medication',
     required: true
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
   },
 }
 

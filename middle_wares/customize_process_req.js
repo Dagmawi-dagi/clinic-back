@@ -24,12 +24,19 @@ exports.customize_process_req = ()=>{
     // KEY NOTE :: 
     // strip out fields from the req.body if Not defined on the schema
     const { error } = generateJoiSchema(mongooseSchema,'schemaName').validate(req.body,{stripUnknown: true})
-    if( error ) return next(new app_error_feedback(400,error))
+    if( error )  {
+      next(new app_error_feedback(400,error)) 
+      return
+    }
   }
   
-  const validate_anyObj_Byschema = (obj,schema,schemaName,next) => {
-    const { error } = generateJoiSchema(schema,schemaName).validate(obj)
-    if( error ) return next(new app_error_feedback(400,error))
+  // we can use awite if needed to make it async
+  const validate_mongoose_schema_byJoi =  async (obj,schema,schemaName,next) => {
+    return new Promise((resolve, reject) => {
+      const { error } = generateJoiSchema(schema,schemaName).validate(obj)
+      if (error) reject(next(new app_error_feedback(400,error)));
+      else resolve(true);
+    });
   }
 
   const filter_reqBody = (req,filterArray) =>{
@@ -44,7 +51,7 @@ exports.customize_process_req = ()=>{
   return{
     add_filename_to_reqBody,
     validate_reqBody,
-    validate_anyObj_Byschema,
+    validate_mongoose_schema_byJoi,
     filter_reqBody,
   }
 

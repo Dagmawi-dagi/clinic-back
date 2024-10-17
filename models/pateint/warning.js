@@ -15,6 +15,11 @@ const schema = {
   chronic_diseases:{
     type: [String],
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const warning_Schema = new mongoose.Schema(schema,{timestamps:true})

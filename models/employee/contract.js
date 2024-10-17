@@ -38,9 +38,10 @@ const schema = {
     },
     required: true
   },
-  createdBy: {
+  createdBy:{
     type: mongoose.Schema.Types.ObjectId,
-    ref:'user' 
+    ref: 'user',
+    required:true
   }
 
 }

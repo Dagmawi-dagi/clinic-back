@@ -24,6 +24,8 @@ exports.sign_in = catchAsync(async(req,res,next)=>{
   if (!user || !await bcrypt.compare(req.body.userPassword,user.userPassword)) return next(new app_error_feedback(400,'please provide correct phoneNumber and password'))
   // create token
   const token = jsonWebToken.sign({id:user._id},process.env.JWT_SECRET, { expiresIn: process.env.JWT_expiresIn } )
+  user.last_logged_in = Date.now()
+  await user.save()
   // to exclude the userPassword field from the doc we send to client but DO NOT CAll .save() right after that 
   user.userPassword = undefined
   res.status(200).json({

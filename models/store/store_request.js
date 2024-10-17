@@ -1,15 +1,9 @@
 const mongoose = require('mongoose');
 
-
 const schema = {
   store_item:{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'store_item',
-    required: true
-  },
-  requested_by:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
     required: true
   },
   aprroved_by:{
@@ -26,6 +20,11 @@ const schema = {
   },
   comment: {
     type:String,
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
   }
 }
 

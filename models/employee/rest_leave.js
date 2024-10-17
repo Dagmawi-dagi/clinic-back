@@ -32,6 +32,11 @@ const schema = {
   },
   comment: {
     type: String,
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
   }
 }
 const rest_leave_Schema = new mongoose.Schema(schema,{

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const schema = {
+  // personal info
   first_name: {
     type: String,
     required: true
@@ -13,18 +14,29 @@ const schema = {
     type: String,
     required: true
   },
+  gender:{
+    type: String,
+    enum: {
+      values: ['male', 'female'],
+      message: '{VALUE} is not supported'
+    },
+    required: true,
+  },
+  // address
   email:{
     type: String,
     required: true,
+    unique: true 
   },
   phone_number:{
     type: Number,
     required: true,
   },
-  skill:{
-    type: Object,
-    required: true
-  },
+  // // skill for
+  // skill:{
+  //   type: Object,
+  //   default: null
+  // },
   system_user:{
     type: Boolean,
     default: false,
@@ -45,13 +57,22 @@ const schema = {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'department'
   }],
-  employee_archive: {
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'employee_archive',
-  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const employee_Schema = new mongoose.Schema(schema,{timestamps:true})
+
+// virtuals
+employee_Schema.virtual('employee_archive',{
+  ref: 'employee_archive',
+  foreignField: 'employee',
+  localField: '_id',
+  justOne: true,
+})
 
 module.exports.model = mongoose.model('employee',employee_Schema)
 module.exports.schema = schema

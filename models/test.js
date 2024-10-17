@@ -15,10 +15,17 @@ const joi  = require('joi');
 
 // NOTE for the Not required fields put default value as null
 // NOTE on every create and update operations include the createdBy: user id ref(user reference id)
+// NOTE on every update operations include the updatedBy: which holds array of objs {user id , date}
 const schema = {
   name : {
     type: String,
-    required: true}
+    required: true
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 const test_schema = new mongoose.Schema(schema,{ timestamps:true})
 

@@ -5,6 +5,11 @@ const schema = {
     type: String,
     required: true,
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const symptom_Schema = new mongoose.Schema(schema,{timestamps:true})

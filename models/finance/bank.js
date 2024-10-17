@@ -8,6 +8,11 @@ const schema = {
   health_facility_account_number:{
     type: Number,
     required: true,
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
   }
 }
 

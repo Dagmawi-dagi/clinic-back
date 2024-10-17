@@ -91,6 +91,11 @@ const schema  = {
     },
     required: true,
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const pateintSchema = new mongoose.Schema(schema,{
@@ -106,7 +111,6 @@ pateintSchema.virtual('pateint_archive',{
   localField: '_id',
   justOne: true,
 })
-
 
 module.exports.model = mongoose.model('pateint',pateintSchema)
 module.exports.schema = schema

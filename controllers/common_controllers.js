@@ -7,7 +7,9 @@ exports.common_controller =  (model)=>{
   const create = async(req,res,next)=>{
     if (!model) next(new app_error_feedback(500, `Model ${model} not found`))
     try {
-      const data = await model.create([req.body],{validateBeforeSave:true})
+      const createObj = {...req.body} // if the route_ref has add_createdBy then get the user from the req.user and {createdBy: req.user._id} will be added to the req.body
+      if(req.route_ref.controller.add_createdBy) createObj.createdBy = req.user._id
+      const data = await model.create([createObj],{validateBeforeSave:true})
       res.status(200).json({ 
         status: 'success',
         data

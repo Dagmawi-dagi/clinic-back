@@ -6,9 +6,10 @@ const schema = {
     ref: 'employee',
     required: true
   },
-  skill:{
+  createdBy:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'skill',
+    ref: 'user',
+    required:true
   }
 }
 const employee_archive_Schema = new mongoose.Schema(schema,{

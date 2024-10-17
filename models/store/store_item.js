@@ -1,3 +1,4 @@
+const { type } = require('express/lib/response');
 const mongoose = require('mongoose');
 
 const schema = {
@@ -13,6 +14,11 @@ const schema = {
     type: Number,
     required: true,
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const store_item_Schema = new mongoose.Schema(schema,{ timestamps: true})

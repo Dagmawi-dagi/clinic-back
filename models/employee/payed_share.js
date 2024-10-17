@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const schema = {
-  form_date:{
+  from_date:{
     type: Date,
     required: true
   },

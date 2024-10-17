@@ -1,24 +1,23 @@
 const mongoose = require('mongoose');
 
-
 const schema = {
-  name: {   // admin , Nurse , triage , labratologiest , radiographer , radiologiest , store , cashier 
+  department_name: {   // admin , Nurse , triage , labratologiest , radiographer , radiologiest , store , cashier 
     type: String,
     required: true,
+    unique: true
   },
-  // like for example for for phisican thier will be pedatric , gyno , internal medicine , dental , surgen we need the fields below
-  has_parent:{
-    type: Boolean,
-    default:false
-  },
+  // like for example for phisican dep't thier will be sub departments gyno dental surgen etc
+  // use self reference
   parent_reference : {
-    type: String, // phisican
-  },
-  access_action_privilage_config:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'access_action_privilage_config',
-    required:true
+    ref: 'department',
+    default: null
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const department_Schema = new mongoose.Schema(schema,{

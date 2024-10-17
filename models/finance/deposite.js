@@ -26,6 +26,11 @@ const schema = {
     ref: 'pateint_archive',
     required: true
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const deposite_Schema = new mongoose.Schema(schema,{timestamps:true})

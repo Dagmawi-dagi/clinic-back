@@ -26,7 +26,12 @@ const schema = {
   decision_by:{
     type: mongoose.Schema.Types.ObjectId,
     required: true
-  } 
+  },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const disciplinary_record_schema = new mongoose.Schema(schema,{timestamps:true})

@@ -29,6 +29,7 @@
     //          crud_method: 'create',
     //          model: 'emergency_contact',
     //          common: true,
+    //          add_createdBy:true // to add createdBy field to req.body that will be used to create the document in db
     //        },
     //     },
     //   ],
@@ -68,6 +69,22 @@ exports.routes_ref = [
     base_url : '/user',
     controller_file: 'user', 
     api: [
+      { 
+        url: '/users', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'user',
+          crud_method: 'getList',
+          common: true
+        },
+      },
       { 
         url: '/sign_up', 
         req_method: 'post',
@@ -672,4 +689,144 @@ exports.routes_ref = [
       },
     ],
   },
+
+  {
+    route_for : 'store',
+    base_url : '/store',
+    controller_file: 'store',
+    api: [
+      { 
+        url: '/', 
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'store_item',
+          crud_method: 'create',
+          common: true,
+          add_createdBy:true
+        },
+      },
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'store_item',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+      { 
+        url: '/requested_items', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'store_request',
+          crud_method: 'getList',
+          common: true,
+          add_createdBy:true
+        },
+      },
+    ],
+  },
+  
+  {
+    route_for : 'department',
+    base_url : '/department',
+    controller_file: 'department', 
+    api: [
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'department',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+      { 
+        url: '/', 
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'department',
+          crud_method: 'create',
+          common: true,
+          add_createdBy:true
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'employee',
+    base_url : '/employee',
+    controller_file: 'employee', 
+    api: [
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'employee',
+          crud_method: 'getList',
+          common: true
+        },
+      },
+      { 
+        url: '/register', 
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'employee',
+          crud_method: 'register_employee',
+          common: false
+        },
+      },
+    ],
+  },
+
 ]

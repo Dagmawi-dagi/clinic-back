@@ -34,11 +34,6 @@ const schema = {
     trim: true,
     required: false
   },
-  createdBy: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-    required: true
-  },
   pateint_type: {
     type: String,
     enum: {
@@ -51,6 +46,11 @@ const schema = {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'pateint_archive'
   },
+  createdBy:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+    required:true
+  }
 }
 
 const queue_schema = new mongoose.Schema(schema,{ timestamps: true });

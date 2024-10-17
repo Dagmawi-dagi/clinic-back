@@ -6,7 +6,6 @@ const schema = {
     ref: 'pateint',
     required: true
   },
- 
 }
 
 const pateint_archive_Schema = new mongoose.Schema(schema,{

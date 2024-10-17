@@ -32,13 +32,13 @@ const schema = {
   },
   avatar:{
     type: String,
-    default: 'default.png'
+    default: 'jpeg-default.jpeg'
   },
-  role: {
-    type: String,
-    enum:['user','admin'],
-    default: 'user'
-  },
+  role: [{ // this should be ref to department of our clinic system case 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'department',
+    required: true
+  }],
   passwordChangedAt: {type:Date},
   passwordResetToken: {type:String},
   passwordResetExpires: {type:Date},
@@ -48,10 +48,9 @@ const schema = {
   active:{
     type: String,
     default: true,
-    select: false
+    // select: false
   }
 }
-
 const user_schema = new mongoose.Schema(schema,{timestamps:true})
 
 // hashing the password on save
@@ -62,13 +61,11 @@ user_schema.pre('save',async function (next) {
   next()
 })
 
-
 // here only do all the find operation on user that are active: true
 user_schema.pre(/^find/, function (next){
   this.find({active: { $ne: false }})
   next()
 })
-
 
 user_schema.methods.createPasswordResetToken = function() {
   
@@ -84,8 +81,6 @@ user_schema.methods.createPasswordResetToken = function() {
 
   return resetToken;
 };
-
-
 
 module.exports.model = mongoose.model('user',user_schema)
 module.exports.schema = schema
