@@ -16,11 +16,13 @@ const schema = {
   },
   enterAt: {
     type: Date,
+    required: true
   },
   leaveAt: {
     type: Date,
+    required: true
   },
-  seenBy:{
+  seenBy:{ // the loggedin admin that validated(granted) the attendance 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user'
   },

@@ -101,6 +101,22 @@ exports.routes_ref = [
         },
       },
       { 
+        url: '/create',  // for some reason if we want to create user with out giveing them login token Eg: if admin wants to create user
+        req_method: 'post',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:true,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'user',
+          crud_method: 'create',
+          common: true
+        },
+      },
+      { 
         url: '/sign_in', 
         req_method: 'post',
         auth: false,
@@ -581,7 +597,7 @@ exports.routes_ref = [
           model: 'invoice',
           crud_method: 'getList',
           common: true
-        },
+        },  
       },
     ],
   },
@@ -824,6 +840,30 @@ exports.routes_ref = [
           model: 'employee',
           crud_method: 'register_employee',
           common: false
+        },
+      },
+    ],
+  },
+
+  {
+    route_for : 'attendance',
+    base_url : '/attendance',
+    controller_file: 'attendance', 
+    api: [
+      { 
+        url: '/', 
+        req_method: 'get',
+        auth: true,
+        restrict_to:[],
+        upload: {},
+        image_upload:false,
+        save_file_to: '',
+        req_body_validation:false,
+        filter_reqBody_with:[],
+        controller:{
+          model: 'attendance',
+          crud_method: 'getList',
+          common: true
         },
       },
     ],

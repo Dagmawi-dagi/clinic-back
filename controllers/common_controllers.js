@@ -43,6 +43,10 @@ exports.common_controller =  (model)=>{
         limitKey: 'perPage',
         skipKey: 'page',
       });
+
+      console.log(limit);
+      console.log(skip);
+
       const data = await model.find(filter)
       .skip(skip)
       .limit(limit)
