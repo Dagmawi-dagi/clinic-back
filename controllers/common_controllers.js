@@ -39,23 +39,24 @@ exports.common_controller =  (model)=>{
 
       console.log(`queryStr on getList request ${queryStr ?? 'no queryStr found' }`)
 
-      const { filter, skip, limit, sort, projection, population } = api_query_params(queryStr, {
+      let { filter, skip, limit, sort, projection, population } = api_query_params(queryStr, {
         limitKey: 'perPage',
         skipKey: 'page',
       });
 
-      console.log(limit);
-      console.log(skip);
+      // since we are passing the number of page for pagination calculate how much doc to skip
+      skip = skip < 1 || !skip ?  0 : (skip - 1)*10
 
       const data = await model.find(filter)
-      .skip(skip)
+      .skip(skip) 
       .limit(limit)
       .sort(sort)
       .select(projection)
       .populate(population) // if youe want you can populate virtuall OR local fields
       res.status(200).json({
         status: 'success',
-        data
+        count: data.length,
+        data,
       })
     } catch (err) {
       next(err) 

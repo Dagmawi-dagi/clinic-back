@@ -14,9 +14,8 @@ io?.on('connection',(socket)=>{
   })
 })
 
-
 // io.emit('broadcast', /* … */); // emit an event to all connected sockets
 
 // for event
-exports.newEventPost = (obj)=>{ io.emit('newEvent',obj) }
-exports.eventPostDeleted = (obj)=>{ io.emit('eventDeleted',obj) }
+exports.newEventPost = (event)=>{ io.emit('newEvent',event) }
+exports.eventPostDeleted = (event)=>{ io.emit('eventDeleted',event) }

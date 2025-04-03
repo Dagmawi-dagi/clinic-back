@@ -19,14 +19,10 @@ exports.test = catchAsync(async(req,res,next)=>{
   try {
       // Start the transaction
       session.startTransaction();
-
-
       
       // Perform multiple operations
       const doc = await models.test.create([{ name: 'ff' }], { session })
       await models.test.updateOne({ name: 'ff' }, { name:  doc[0]._id  },{session})
-
-
 
       // Commit the transaction if everything goes well
       await session.commitTransaction();
